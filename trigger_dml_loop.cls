@@ -1,4 +1,4 @@
-Apex Trigger:
+
 trigger sampleTrigger on Account (before update) {
             
     for(Account a: Trigger.new){
@@ -7,7 +7,7 @@ trigger sampleTrigger on Account (before update) {
 
 }
 
-Apex Class:
+
 public with sharing utilityClass{
    public void processContact(Account a){
    	
