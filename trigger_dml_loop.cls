@@ -1,11 +1,7 @@
-public class trigger_dml_test 
-{
-	trigger sampleTrigger on Account (before update) {
-            
-    	for(Account a: Trigger.new){
-    	processContact(a);
+trigger sampleTrigger on Account (before update) {
+            for(Account a: Trigger.new){
+    		processContact(a);
     	}
-	}
 }
 
 public with sharing utilityClass{
