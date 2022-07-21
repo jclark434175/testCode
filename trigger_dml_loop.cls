@@ -1,12 +1,12 @@
-
-trigger sampleTrigger on Account (before update) {
+public class trigger_dml_test 
+{
+	trigger sampleTrigger on Account (before update) {
             
-    for(Account a: Trigger.new){
+    	for(Account a: Trigger.new){
     	processContact(a);
-    }
-
+    	}
+	}
 }
-
 
 public with sharing utilityClass{
    public void processContact(Account a){
@@ -20,5 +20,5 @@ public with sharing utilityClass{
 	Contact c= new Contact(firstname='default',lastname='contact',accountId=a.id);
 	insert c;
    }
-
 }
+
