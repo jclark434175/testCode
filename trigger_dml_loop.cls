@@ -10,7 +10,7 @@ trigger SoqlTriggerNotBulk on Account(after update) {
     }
 }
 
-public with sharing utilityClass{
+public with sharing class utilityClass {
    public void processContact(Account a){
    	
 	/* 
