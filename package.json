@@ -1,0 +1,15 @@
+{
+  "name": "best-value-games",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Ranked list of top video games with affiliate buy buttons. Modeled on bestvaluegpu.com.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.4.10"
+  }
+}

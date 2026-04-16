@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ranked list of top video games by value ($ per hour of gameplay). Find the best games to buy with direct links to major storefronts."
+    />
+    <title>Best Value Games — Top games ranked by $/hour</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <h1>Best Value Games</h1>
+        <p class="tagline">
+          Top video games ranked by <strong>$ / hour of gameplay</strong>. Click a column header to re-sort.
+        </p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="toolbar" aria-label="Filters">
+        <div class="toolbar-row">
+          <label class="search">
+            <span class="sr-only">Search games</span>
+            <input
+              id="search"
+              type="search"
+              placeholder="Search by title…"
+              autocomplete="off"
+            />
+          </label>
+
+          <label class="genre">
+            <span>Genre:</span>
+            <select id="genre-filter">
+              <option value="">All genres</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="toolbar-row">
+          <span class="filter-label">Platforms:</span>
+          <div id="platform-chips" class="chips" role="group" aria-label="Platform filter"></div>
+          <button id="reset-filters" type="button" class="reset-btn">Reset</button>
+        </div>
+      </section>
+
+      <div class="table-wrap">
+        <table id="games-table">
+          <thead>
+            <tr>
+              <th scope="col" class="col-rank">#</th>
+              <th scope="col" class="sortable" data-sort="title">Title</th>
+              <th scope="col">Platforms</th>
+              <th scope="col" class="sortable" data-sort="genre">Genre</th>
+              <th scope="col" class="sortable num" data-sort="metacritic">Metacritic</th>
+              <th scope="col" class="sortable num" data-sort="hoursAvg">Avg Hours</th>
+              <th scope="col" class="sortable num" data-sort="price">Price</th>
+              <th scope="col" class="sortable num" data-sort="valuePerHour">$ / hour</th>
+              <th scope="col" class="col-buy">Buy at</th>
+            </tr>
+          </thead>
+          <tbody id="games-tbody"></tbody>
+        </table>
+        <p id="empty-state" class="empty-state" hidden>
+          No games match your filters. Try resetting.
+        </p>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p class="disclosure">
+          <strong>Affiliate disclosure:</strong> Buttons labeled with a
+          storefront name are affiliate links. We may earn a commission on
+          qualifying purchases at no extra cost to you.
+        </p>
+        <p class="small">
+          Prices and playtime estimates are representative and updated
+          periodically. Metacritic scores are copyright their respective
+          owners.
+        </p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
