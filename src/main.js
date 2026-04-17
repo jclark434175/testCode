@@ -24,6 +24,7 @@ const searchInput = document.getElementById("search");
 const genreSelect = document.getElementById("genre-filter");
 const platformChips = document.getElementById("platform-chips");
 const resetBtn = document.getElementById("reset-filters");
+const tabBar = document.querySelector(".tabs");
 
 const allPlatforms = getAllPlatforms(GAMES);
 const allGenres = getAllGenres(GAMES);
@@ -62,6 +63,19 @@ platformChips.addEventListener("click", (e) => {
   const chip = e.target.closest(".chip");
   if (!chip) return;
   togglePlatform(state, chip.dataset.platform);
+  rerender();
+});
+
+// Tabs
+tabBar.addEventListener("click", (e) => {
+  const tab = e.target.closest(".tab");
+  if (!tab) return;
+  state.tab = tab.dataset.tab;
+  tabBar.querySelectorAll(".tab").forEach((t) => {
+    const active = t === tab;
+    t.classList.toggle("active", active);
+    t.setAttribute("aria-selected", active);
+  });
   rerender();
 });
 

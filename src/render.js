@@ -15,6 +15,31 @@ const escapeHtml = (str) =>
 const formatMoney = (n) => `$${n.toFixed(2)}`;
 const formatValue = (n) => `$${n.toFixed(2)}/hr`;
 
+// Stable pastel color for the letter-tile fallback, keyed on the title.
+function tileColor(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) hash = (hash * 31 + str.charCodeAt(i)) | 0;
+  const hue = Math.abs(hash) % 360;
+  return `hsl(${hue}, 55%, 45%)`;
+}
+
+function renderThumbnail(game) {
+  if (game.image) {
+    // onerror swaps to the letter-tile fallback if Steam CDN URL breaks.
+    const letter = escapeHtml(game.title.charAt(0).toUpperCase());
+    const bg = tileColor(game.title);
+    return `<img
+      class="thumb"
+      src="${escapeHtml(game.image)}"
+      alt=""
+      loading="lazy"
+      onerror="this.outerHTML='<span class=\\'thumb thumb-fallback\\' style=\\'background:${bg}\\'>${letter}</span>'"
+    />`;
+  }
+  const letter = escapeHtml(game.title.charAt(0).toUpperCase());
+  return `<span class="thumb thumb-fallback" style="background:${tileColor(game.title)}">${letter}</span>`;
+}
+
 function renderPlatformBadges(platforms) {
   return platforms
     .map(
@@ -56,8 +81,11 @@ export function renderRows(games) {
         <td class="col-rank" data-label="Rank">#${i + 1}</td>
         <td class="col-title" data-label="Title">
           <div class="title-cell">
-            <span class="title">${escapeHtml(game.title)}</span>
-            <span class="year">${game.releaseYear}</span>
+            ${renderThumbnail(game)}
+            <div class="title-text">
+              <span class="title">${escapeHtml(game.title)}</span>
+              <span class="year">${game.releaseYear}</span>
+            </div>
           </div>
         </td>
         <td class="col-platforms" data-label="Platforms">${renderPlatformBadges(game.platforms)}</td>

@@ -10,9 +10,14 @@
 //   metacritic:  number (0-100)
 //   price:       number (USD, current representative price)
 //   hoursAvg:    number (representative average playtime in hours)
+//   image:       string (URL to cover image; Steam CDN header.jpg works well;
+//                 leave empty to render a letter-tile fallback)
 //   affiliates:  object keyed by the STORES ids in ./stores.js
 //
 // The site computes `$/hour = price / hoursAvg` and sorts ascending by default.
+//
+// Steam CDN image URL pattern (drop-in for any Steam game):
+//   https://cdn.cloudflare.steamstatic.com/steam/apps/{APP_ID}/header.jpg
 
 export const GAMES = [
   {
@@ -24,13 +29,9 @@ export const GAMES = [
     metacritic: 96,
     price: 59.99,
     hoursAvg: 80,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -42,13 +43,9 @@ export const GAMES = [
     metacritic: 96,
     price: 59.99,
     hoursAvg: 100,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1086940/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -60,13 +57,9 @@ export const GAMES = [
     metacritic: 96,
     price: 69.99,
     hoursAvg: 70,
+    image: "", // Nintendo-only; letter tile fallback
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -78,13 +71,9 @@ export const GAMES = [
     metacritic: 86,
     price: 39.99,
     hoursAvg: 60,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -96,13 +85,9 @@ export const GAMES = [
     metacritic: 90,
     price: 29.99,
     hoursAvg: 45,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1145350/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -114,13 +99,9 @@ export const GAMES = [
     metacritic: 89,
     price: 14.99,
     hoursAvg: 160,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -132,13 +113,9 @@ export const GAMES = [
     metacritic: 82,
     price: 39.99,
     hoursAvg: 50,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/553850/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -150,13 +127,9 @@ export const GAMES = [
     metacritic: 97,
     price: 59.99,
     hoursAvg: 90,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -168,13 +141,9 @@ export const GAMES = [
     metacritic: 96,
     price: 29.99,
     hoursAvg: 80,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -186,13 +155,9 @@ export const GAMES = [
     metacritic: 90,
     price: 14.99,
     hoursAvg: 50,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/367520/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -204,13 +169,9 @@ export const GAMES = [
     metacritic: 92,
     price: 19.99,
     hoursAvg: 15,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/504230/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -222,13 +183,9 @@ export const GAMES = [
     metacritic: 93,
     price: 29.99,
     hoursAvg: 300,
+    image: "", // Not on Steam; letter tile fallback
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -240,13 +197,9 @@ export const GAMES = [
     metacritic: 90,
     price: 14.99,
     hoursAvg: 40,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/2379780/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -258,13 +211,9 @@ export const GAMES = [
     metacritic: 97,
     price: 39.99,
     hoursAvg: 35,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/632470/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -276,13 +225,9 @@ export const GAMES = [
     metacritic: 93,
     price: 39.99,
     hoursAvg: 100,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -294,13 +239,9 @@ export const GAMES = [
     metacritic: 95,
     price: 59.99,
     hoursAvg: 100,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1687950/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -312,13 +253,9 @@ export const GAMES = [
     metacritic: 84,
     price: 59.99,
     hoursAvg: 45,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -330,13 +267,9 @@ export const GAMES = [
     metacritic: 87,
     price: 39.99,
     hoursAvg: 30,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1240440/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -348,13 +281,9 @@ export const GAMES = [
     metacritic: 90,
     price: 59.99,
     hoursAvg: 35,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
   {
@@ -366,13 +295,9 @@ export const GAMES = [
     metacritic: 95,
     price: 9.99,
     hoursAvg: 15,
+    image: "https://cdn.cloudflare.steamstatic.com/steam/apps/620/header.jpg",
     affiliates: {
-      amazon: "",
-      steam: "",
-      epic: "",
-      gog: "",
-      playstation: "",
-      xbox: "",
+      amazon: "", steam: "", epic: "", gog: "", playstation: "", xbox: "",
     },
   },
 ];

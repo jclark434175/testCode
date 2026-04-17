@@ -77,6 +77,36 @@ main.container {
   padding-bottom: 40px;
 }
 
+/* ---------- Tabs (bestvaluegpu-style category switcher) ---------- */
+.tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 14px;
+  border-bottom: 2px solid var(--border);
+}
+
+.tab {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  transition: color 0.12s ease, border-color 0.12s ease;
+}
+
+.tab:hover {
+  color: var(--text);
+}
+
+.tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 /* ---------- Toolbar ---------- */
 .toolbar {
   display: flex;
@@ -275,16 +305,48 @@ main.container {
 
 .col-title .title-cell {
   display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.col-title .title-text {
+  display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .col-title .title {
   font-weight: 600;
+  line-height: 1.2;
 }
 
 .col-title .year {
   font-size: 12px;
   color: var(--text-muted);
+}
+
+/* Thumbnail — image or letter-tile fallback */
+.thumb {
+  flex-shrink: 0;
+  width: 64px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 3px;
+  background: #eef1f5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.thumb.thumb-fallback {
+  width: 64px;
+  height: 30px;
 }
 
 .num {

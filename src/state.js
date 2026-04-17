@@ -7,7 +7,20 @@ export const createInitialState = () => ({
   search: "",
   genre: "",
   platforms: new Set(), // empty = all platforms
+  tab: "all",           // all | new | indie | aaa
 });
+
+// Tab predicates — each returns true if the game belongs in that tab.
+// "new" = released in the last 3 calendar years.
+// "indie" = price <= $20 (stand-in for small-dev priced titles).
+// "aaa"   = price >= $40 (full-price AAA releases).
+const THIS_YEAR = new Date().getFullYear();
+export const TAB_FILTERS = {
+  all: () => true,
+  new: (g) => g.releaseYear >= THIS_YEAR - 2,
+  indie: (g) => g.price <= 20,
+  aaa: (g) => g.price >= 40,
+};
 
 // Derived value for each game (kept out of the data file so it stays source).
 const computed = (game) => ({
@@ -30,8 +43,10 @@ export function getAllGenres(games) {
 
 export function applyFiltersAndSort(games, state) {
   const q = state.search.trim().toLowerCase();
+  const tabPredicate = TAB_FILTERS[state.tab] || TAB_FILTERS.all;
 
   const filtered = games.filter((g) => {
+    if (!tabPredicate(g)) return false;
     if (q && !g.title.toLowerCase().includes(q)) return false;
     if (state.genre && g.genre !== state.genre) return false;
     if (state.platforms.size > 0) {
