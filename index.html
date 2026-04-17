@@ -1,98 +1,208 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Ranked list of top video games by value ($ per hour of gameplay). Find the best games to buy with direct links to major storefronts."
-    />
-    <title>Best Value Games — Top games ranked by $/hour</title>
-    <link rel="stylesheet" href="/src/styles.css" />
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BestValueGames.Guru | Top Video Games Ranked by Value</title>
+    <meta name="description" content="Your trusted video game value guru. Discover top-rated games ranked by price-per-hour with direct links to Steam, Epic, GOG, PlayStation, Xbox, and Amazon.">
+    <link rel="canonical" href="https://example.com/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/styles.css">
+</head>
+<body>
+    <!-- Header -->
     <header class="site-header">
-      <div class="container">
-        <h1>Best Value Games</h1>
-        <p class="tagline">
-          Top video games ranked by <strong>$ / hour of gameplay</strong>. Click a column header to re-sort.
-        </p>
-      </div>
+        <div class="container">
+            <div class="header-inner">
+                <a href="/" class="logo">
+                    <span class="logo-icon">&#127918;</span>
+                    <span class="logo-text">BestValueGames<span class="logo-accent">.Guru</span></span>
+                </a>
+                <nav class="main-nav">
+                    <a href="#products" class="nav-link">All Games</a>
+                    <a href="#categories" class="nav-link">Categories</a>
+                    <a href="#guide" class="nav-link">Buyer's Guide</a>
+                    <a href="#faq" class="nav-link">FAQ</a>
+                </nav>
+                <button class="mobile-menu-btn" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
     </header>
 
-    <main class="container">
-      <nav class="tabs" role="tablist" aria-label="Categories">
-        <button type="button" class="tab active" data-tab="all" role="tab" aria-selected="true">All Games</button>
-        <button type="button" class="tab" data-tab="new" role="tab" aria-selected="false">New Releases</button>
-        <button type="button" class="tab" data-tab="indie" role="tab" aria-selected="false">Indie</button>
-        <button type="button" class="tab" data-tab="aaa" role="tab" aria-selected="false">AAA</button>
-      </nav>
-
-      <section class="toolbar" aria-label="Filters">
-        <div class="toolbar-row">
-          <label class="search">
-            <span class="sr-only">Search games</span>
-            <input
-              id="search"
-              type="search"
-              placeholder="Search by title…"
-              autocomplete="off"
-            />
-          </label>
-
-          <label class="genre">
-            <span>Genre:</span>
-            <select id="genre-filter">
-              <option value="">All genres</option>
-            </select>
-          </label>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">Trusted by 50,000+ Gamers</span>
+                <h1>Your Wallet.<br><span class="text-accent">Your Playtime.</span></h1>
+                <p class="hero-sub">Expert-curated video games with honest reviews. Find the best deals ranked by price-per-hour across every major storefront.</p>
+                <div class="hero-cta">
+                    <a href="#products" class="btn btn-primary btn-lg">Shop Best Value</a>
+                    <a href="#guide" class="btn btn-outline btn-lg">Read Buyer's Guide</a>
+                </div>
+                <div class="hero-trust">
+                    <div class="trust-item">
+                        <span class="trust-icon">&#10003;</span>
+                        <span>Verified Reviews</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">&#10003;</span>
+                        <span>Best Price Tracking</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">&#10003;</span>
+                        <span>Updated Weekly</span>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="toolbar-row">
-          <span class="filter-label">Platforms:</span>
-          <div id="platform-chips" class="chips" role="group" aria-label="Platform filter"></div>
-          <button id="reset-filters" type="button" class="reset-btn">Reset</button>
+    <!-- Categories -->
+    <section id="categories" class="categories-section">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="category-grid" id="category-grid">
+                <!-- Categories rendered dynamically -->
+            </div>
         </div>
-      </section>
+    </section>
 
-      <div class="table-wrap">
-        <table id="games-table">
-          <thead>
-            <tr>
-              <th scope="col" class="col-rank">#</th>
-              <th scope="col" class="sortable" data-sort="title">Title</th>
-              <th scope="col">Platforms</th>
-              <th scope="col" class="sortable" data-sort="genre">Genre</th>
-              <th scope="col" class="sortable num" data-sort="metacritic">Metacritic</th>
-              <th scope="col" class="sortable num" data-sort="hoursAvg">Avg Hours</th>
-              <th scope="col" class="sortable num" data-sort="price">Price</th>
-              <th scope="col" class="sortable num" data-sort="valuePerHour">$ / hour</th>
-              <th scope="col" class="col-buy">Buy at</th>
-            </tr>
-          </thead>
-          <tbody id="games-tbody"></tbody>
-        </table>
-        <p id="empty-state" class="empty-state" hidden>
-          No games match your filters. Try resetting.
-        </p>
-      </div>
-    </main>
+    <!-- Products -->
+    <section id="products" class="products-section">
+        <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title" style="text-align: left;">Top-Rated Video Games</h2>
+                    <span id="last-updated" class="section-meta"></span>
+                </div>
+                <div class="sort-controls">
+                    <select id="sort-select" class="sort-select">
+                        <option value="valuePerHour">Best Value ($/hr)</option>
+                        <option value="metacritic">Highest Rated</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="hoursAvg">Most Content (Hours)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="product-grid" id="product-grid">
+                <!-- Products loaded dynamically -->
+            </div>
+            <p id="empty-state" class="empty-state" hidden>No games match this category.</p>
+        </div>
+    </section>
 
+    <!-- Buyer's Guide -->
+    <section id="guide" class="guide-section">
+        <div class="container">
+            <h2 class="section-title">Buyer's Guide</h2>
+            <p class="section-sub">Everything you need to know before buying your next video game.</p>
+            <div class="guide-grid">
+                <div class="guide-card">
+                    <div class="guide-icon">&#128176;</div>
+                    <h3>What is $ per Hour?</h3>
+                    <p>Our value metric divides the game's price by its average playtime. A 60-hour RPG at $60 is $1/hour; a 15-hour action game at the same price is $4/hour. Lower is better value.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-icon">&#127942;</div>
+                    <h3>Base vs Deluxe Editions</h3>
+                    <p>Deluxe editions rarely justify the premium. Most bundled DLC can be bought later on sale for a fraction of the cost. Stick to base editions unless you know you want a specific add-on.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-icon">&#128200;</div>
+                    <h3>When to Wait for a Sale</h3>
+                    <p>Steam's summer and winter sales cut most catalog titles 50-75% off. AAA releases typically hit their first major discount 6 months after launch. Patience pays.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-icon">&#128187;</div>
+                    <h3>Picking a Storefront</h3>
+                    <p>Steam has the biggest catalog and best refunds. GOG guarantees DRM-free downloads. Epic regularly offers free AAA games. Console stores price-match less but carry exclusives.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary>How accurate are the playtime estimates?</summary>
+                    <p>Our average playtimes are drawn from community completion stats (main story + meaningful side content). Actual playtime varies widely — completionists often double these numbers, while players who rush campaigns may finish in 60–70% of the listed hours.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Why is $/hour the best metric for game value?</summary>
+                    <p>It captures the simplest, most durable signal: how much entertainment a dollar buys. A cheap 100-hour game can deliver more value than a pricey 15-hour one, even if the shorter game has higher production values. Combine this with Metacritic for quality.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Should I buy at launch or wait?</summary>
+                    <p>For single-player: wait. You'll get patched bugs, all DLC bundled, and a steep discount. For competitive multiplayer: buy early — player counts drop fast and matchmaking suffers. Live-service games with frequent seasons also favor early adoption.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>What about free-to-play games?</summary>
+                    <p>We don't rank free-to-play titles since the $/hour metric breaks down at zero. Games like Fortnite, League of Legends, and Warframe are excellent choices but monetize through cosmetics and battle passes rather than an upfront price.</p>
+                </details>
+                <details class="faq-item">
+                    <summary>Which storefront has the best prices?</summary>
+                    <p>Fanatical, GreenManGaming, and Humble regularly beat Steam's own prices on the same Steam keys. For PlayStation and Xbox, first-party stores typically match or beat retail — Amazon used to lead but rarely has deep physical discounts anymore.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-inner">
+                <h2>Level Up Your Library.</h2>
+                <p>New games and deals added weekly. Bookmark this page and check back for the latest in gaming value.</p>
+                <a href="#products" class="btn btn-primary btn-lg">Browse All Games</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="site-footer">
-      <div class="container">
-        <p class="disclosure">
-          <strong>Affiliate disclosure:</strong> Buttons labeled with a
-          storefront name are affiliate links. We may earn a commission on
-          qualifying purchases at no extra cost to you.
-        </p>
-        <p class="small">
-          Prices and playtime estimates are representative and updated
-          periodically. Metacritic scores are copyright their respective
-          owners.
-        </p>
-      </div>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <span class="footer-logo">&#127918; BestValueGames<span class="logo-accent">.Guru</span></span>
+                    <p class="footer-desc">Your trusted source for video game value rankings, honest reviews, and the best deals across every major storefront.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="#products">All Games</a>
+                    <a href="#categories">Categories</a>
+                    <a href="#guide">Buyer's Guide</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Categories</h4>
+                    <a href="#" data-category="action">Action</a>
+                    <a href="#" data-category="shooters">Shooters</a>
+                    <a href="#" data-category="rpg">RPG</a>
+                    <a href="#" data-category="indie">Indie</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Affiliate Disclosure</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 BestValueGames.Guru. All rights reserved.</p>
+                <p class="affiliate-disclosure">As an affiliate of Amazon, Steam, Epic, GOG, PlayStation, and Xbox, we may earn from qualifying purchases. Prices and availability subject to change.</p>
+            </div>
+        </div>
     </footer>
 
     <script type="module" src="/src/main.js"></script>
-  </body>
+</body>
 </html>

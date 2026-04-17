@@ -1,51 +1,46 @@
-// Pure render helpers. Each returns an HTML string; the DOM write happens in
-// main.js so this module stays easy to reason about and test.
+// Pure render helpers — each returns an HTML string.
 
 import { STORES } from "./data/stores.js";
+import { CATEGORIES } from "./state.js";
 
 const escapeHtml = (str) =>
   String(str).replace(/[&<>"']/g, (c) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
   }[c]));
 
 const formatMoney = (n) => `$${n.toFixed(2)}`;
-const formatValue = (n) => `$${n.toFixed(2)}/hr`;
+const formatValue = (n) => `$${n.toFixed(2)}`;
 
-// Stable pastel color for the letter-tile fallback, keyed on the title.
 function tileColor(str) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) hash = (hash * 31 + str.charCodeAt(i)) | 0;
-  const hue = Math.abs(hash) % 360;
-  return `hsl(${hue}, 55%, 45%)`;
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0;
+  return `hsl(${Math.abs(h) % 360}, 55%, 40%)`;
 }
 
-function renderThumbnail(game) {
+function ratingClass(score) {
+  if (score >= 90) return "";
+  if (score >= 75) return "mid";
+  return "low";
+}
+
+function renderProductImage(game) {
   if (game.image) {
-    // onerror swaps to the letter-tile fallback if Steam CDN URL breaks.
     const letter = escapeHtml(game.title.charAt(0).toUpperCase());
     const bg = tileColor(game.title);
     return `<img
-      class="thumb"
       src="${escapeHtml(game.image)}"
-      alt=""
+      alt="${escapeHtml(game.title)} cover"
       loading="lazy"
-      onerror="this.outerHTML='<span class=\\'thumb thumb-fallback\\' style=\\'background:${bg}\\'>${letter}</span>'"
+      onerror="this.outerHTML='<div class=\\'image-fallback\\' style=\\'background:${bg}\\'>${letter}</div>'"
     />`;
   }
   const letter = escapeHtml(game.title.charAt(0).toUpperCase());
-  return `<span class="thumb thumb-fallback" style="background:${tileColor(game.title)}">${letter}</span>`;
+  return `<div class="image-fallback" style="background:${tileColor(game.title)}">${letter}</div>`;
 }
 
-function renderPlatformBadges(platforms) {
+function renderPlatforms(platforms) {
   return platforms
-    .map(
-      (p) =>
-        `<span class="platform-badge" data-platform="${escapeHtml(p)}">${escapeHtml(p)}</span>`
-    )
+    .map((p) => `<span class="platform-badge">${escapeHtml(p)}</span>`)
     .join("");
 }
 
@@ -72,68 +67,56 @@ function renderBuyButtons(game) {
   }).join("");
 }
 
-export function renderRows(games) {
+export function renderProductCards(games) {
   if (games.length === 0) return "";
   return games
     .map((game, i) => {
       const valuePerHour = game.price / game.hoursAvg;
-      return `<tr data-id="${escapeHtml(game.id)}">
-        <td class="col-rank" data-label="Rank">#${i + 1}</td>
-        <td class="col-title" data-label="Title">
-          <div class="title-cell">
-            ${renderThumbnail(game)}
-            <div class="title-text">
-              <span class="title">${escapeHtml(game.title)}</span>
-              <span class="year">${game.releaseYear}</span>
+      return `<article class="product-card" data-id="${escapeHtml(game.id)}">
+        <div class="product-image">
+          <span class="product-rank">#${i + 1}</span>
+          <span class="product-rating ${ratingClass(game.metacritic)}" title="Metacritic score">${game.metacritic}</span>
+          ${renderProductImage(game)}
+        </div>
+        <div class="product-body">
+          <div class="product-genre">${escapeHtml(game.genre)}</div>
+          <h3 class="product-title">${escapeHtml(game.title)}</h3>
+          <span class="product-year">${game.releaseYear}</span>
+          <div class="product-platforms">${renderPlatforms(game.platforms)}</div>
+          <div class="product-metrics">
+            <div class="metric">
+              <span class="metric-label">Price</span>
+              <span class="metric-value">${formatMoney(game.price)}</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Hours</span>
+              <span class="metric-value">${game.hoursAvg}</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">$ / Hour</span>
+              <span class="metric-value success">${formatValue(valuePerHour)}</span>
             </div>
           </div>
-        </td>
-        <td class="col-platforms" data-label="Platforms">${renderPlatformBadges(game.platforms)}</td>
-        <td class="col-genre" data-label="Genre">${escapeHtml(game.genre)}</td>
-        <td class="num" data-label="Metacritic">${game.metacritic}</td>
-        <td class="num" data-label="Avg hours">${game.hoursAvg}</td>
-        <td class="num" data-label="Price">${formatMoney(game.price)}</td>
-        <td class="num strong" data-label="$ / hour">${formatValue(valuePerHour)}</td>
-        <td class="col-buy" data-label="Buy at">
           <div class="buy-btn-group">${renderBuyButtons(game)}</div>
-        </td>
-      </tr>`;
+        </div>
+      </article>`;
     })
     .join("");
 }
 
-export function renderPlatformChips(allPlatforms, activePlatforms) {
-  return allPlatforms
-    .map((p) => {
-      const active = activePlatforms.has(p);
+export function renderCategoryCards(activeCategory) {
+  return CATEGORIES
+    .map((cat) => {
+      const active = cat.id === activeCategory;
       return `<button
         type="button"
-        class="chip${active ? " active" : ""}"
-        data-platform="${escapeHtml(p)}"
+        class="category-card${active ? " active" : ""}"
+        data-category="${escapeHtml(cat.id)}"
         aria-pressed="${active}"
-      >${escapeHtml(p)}</button>`;
+      >
+        <span class="cat-emoji" aria-hidden="true">${cat.emoji}</span>
+        <span class="cat-name">${escapeHtml(cat.label)}</span>
+      </button>`;
     })
     .join("");
-}
-
-export function renderGenreOptions(allGenres, activeGenre) {
-  const options = [
-    `<option value=""${activeGenre === "" ? " selected" : ""}>All genres</option>`,
-    ...allGenres.map(
-      (g) =>
-        `<option value="${escapeHtml(g)}"${
-          activeGenre === g ? " selected" : ""
-        }>${escapeHtml(g)}</option>`
-    ),
-  ];
-  return options.join("");
-}
-
-export function updateSortIndicators(thead, sortKey, sortDir) {
-  thead.querySelectorAll("th.sortable").forEach((th) => {
-    th.classList.remove("sort-asc", "sort-desc");
-    if (th.dataset.sort === sortKey) {
-      th.classList.add(sortDir === "asc" ? "sort-asc" : "sort-desc");
-    }
-  });
 }

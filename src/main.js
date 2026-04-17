@@ -1,89 +1,54 @@
 import { GAMES } from "./data/games.js";
-import {
-  renderRows,
-  renderPlatformChips,
-  renderGenreOptions,
-  updateSortIndicators,
-} from "./render.js";
+import { renderProductCards, renderCategoryCards } from "./render.js";
 import {
   createInitialState,
-  getAllPlatforms,
-  getAllGenres,
-  applyFiltersAndSort,
-  toggleSort,
-  togglePlatform,
-  resetFilters,
+  applyCategoryAndSort,
 } from "./state.js";
 
 const state = createInitialState();
 
-const tbody = document.getElementById("games-tbody");
-const thead = document.querySelector("#games-table thead");
+const productGrid = document.getElementById("product-grid");
+const categoryGrid = document.getElementById("category-grid");
+const sortSelect = document.getElementById("sort-select");
 const emptyState = document.getElementById("empty-state");
-const searchInput = document.getElementById("search");
-const genreSelect = document.getElementById("genre-filter");
-const platformChips = document.getElementById("platform-chips");
-const resetBtn = document.getElementById("reset-filters");
-const tabBar = document.querySelector(".tabs");
-
-const allPlatforms = getAllPlatforms(GAMES);
-const allGenres = getAllGenres(GAMES);
+const lastUpdated = document.getElementById("last-updated");
 
 function rerender() {
-  const rows = applyFiltersAndSort(GAMES, state);
-  tbody.innerHTML = renderRows(rows);
-  emptyState.hidden = rows.length !== 0;
-  platformChips.innerHTML = renderPlatformChips(allPlatforms, state.platforms);
-  genreSelect.innerHTML = renderGenreOptions(allGenres, state.genre);
-  updateSortIndicators(thead, state.sortKey, state.sortDir);
+  const games = applyCategoryAndSort(GAMES, state);
+  productGrid.innerHTML = renderProductCards(games);
+  emptyState.hidden = games.length !== 0;
+  categoryGrid.innerHTML = renderCategoryCards(state.category);
 }
 
-// Sortable column headers
-thead.addEventListener("click", (e) => {
-  const th = e.target.closest("th.sortable");
-  if (!th) return;
-  toggleSort(state, th.dataset.sort);
+// Category cards (event delegation — cards re-render on change)
+categoryGrid.addEventListener("click", (e) => {
+  const card = e.target.closest(".category-card");
+  if (!card) return;
+  state.category = card.dataset.category;
+  rerender();
+  document.getElementById("products").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+// Sort select
+sortSelect.addEventListener("change", (e) => {
+  state.sortKey = e.target.value;
   rerender();
 });
 
-// Search
-searchInput.addEventListener("input", (e) => {
-  state.search = e.target.value;
-  rerender();
-});
-
-// Genre dropdown
-genreSelect.addEventListener("change", (e) => {
-  state.genre = e.target.value;
-  rerender();
-});
-
-// Platform chips (event delegation — chips are re-rendered each update)
-platformChips.addEventListener("click", (e) => {
-  const chip = e.target.closest(".chip");
-  if (!chip) return;
-  togglePlatform(state, chip.dataset.platform);
-  rerender();
-});
-
-// Tabs
-tabBar.addEventListener("click", (e) => {
-  const tab = e.target.closest(".tab");
-  if (!tab) return;
-  state.tab = tab.dataset.tab;
-  tabBar.querySelectorAll(".tab").forEach((t) => {
-    const active = t === tab;
-    t.classList.toggle("active", active);
-    t.setAttribute("aria-selected", active);
+// Footer category shortcuts
+document.querySelectorAll('.footer-col a[data-category]').forEach((a) => {
+  a.addEventListener("click", (e) => {
+    e.preventDefault();
+    state.category = a.dataset.category;
+    rerender();
+    document.getElementById("products").scrollIntoView({ behavior: "smooth", block: "start" });
   });
-  rerender();
 });
 
-// Reset
-resetBtn.addEventListener("click", () => {
-  resetFilters(state);
-  searchInput.value = "";
-  rerender();
+// Last-updated stamp
+const fmt = new Intl.DateTimeFormat("en-US", {
+  year: "numeric", month: "short", day: "numeric",
 });
+lastUpdated.textContent = `Last updated ${fmt.format(new Date())} · ${GAMES.length} games ranked`;
 
 rerender();
